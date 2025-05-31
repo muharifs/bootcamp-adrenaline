@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <style>
+        nav { background: #f2f2f2; padding: 10px; }
+        nav a { margin-right: 15px; }
+        .content { padding: 20px; }
+        footer { margin-top: 20px; padding: 10px; background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Website Pecundang</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/profile/pecundang">Kontak</a>
+    </nav>
+    
+    <main>
+        {% block content %}
+        <!-- Konten akan diisi oleh template turunan -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2025 Pecundang Project
+    </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ judul }}{% endblock %}
+
+{% block content %}
+<h1>Selamat datang di profile {% if username %}{{ username }}{% else %}Anonymous{% endif %}!</h1>
+<p>Ini adalah halaman profile pribadi Anda.</p>
+
+<div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px;">
+    <h3>Data Profile:</h3>
+    <p>Nama: <strong>{{ username|default:"Tidak ada nama" }}</strong></p>
+    <p>Judul: <strong>{{ judul }}</strong></p>
+    <p>URL ini diakses dari: <code>/profile/{{ username }}/</code></p>
+</div>
+{% endblock %}
