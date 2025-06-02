@@ -3,6 +3,40 @@
 {% block title %}Halaman Utama{% endblock %}
 
 {% block content %}
-    <h2>Selamat Datang</h2>
-    <p>{{ message }}</p>  <!-- Variabel dari view -->
+  <!-- Hero Section dengan media query -->
+  <div class="hero-section py-5 text-center">
+    <h1 class="display-4">Welcome to My App Pecundang</h1>
+    <p class="lead">Responsive dengan Bootstrap + Custom Media Queries</p>
+  </div>
+
+  <!-- Grid System -->
+  <div class="row">
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card 1</h5>
+          <p class="card-text">Ini card responsive</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Card 2</h5>
+            <p class="card-text">Ini card responsive</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Card 3</h5>
+            <p class="card-text">Ini card responsive</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  
 {% endblock %}

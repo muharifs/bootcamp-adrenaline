@@ -1,9 +1,15 @@
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Default Title{% endblock %}</title>
+    <!-- Load Bootstrap CSS dari lokal -->
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.6-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <!-- Data Father Icon -->
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
         nav { background: #f2f2f2; padding: 10px; }
         nav a { margin-right: 15px; }
@@ -32,24 +38,24 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Website Pecundang</h1>
-    </header>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/profile/pecundang">Kontak</a>
-        <a href="/contact">Form</a>
-    </nav>
-    
+    {% include 'main/navbar.html' %}    
     <main>
-        {% block content %}
-        <!-- Konten akan diisi oleh template turunan -->
-        {% endblock %}
+        <div class="container-xl text-center" style="min-height: 100vh;">
+            {% block content %}
+            <!-- Konten akan diisi oleh template turunan -->
+            {% endblock %}
+        </div>
     </main>
 
     <footer>
         &copy; 2025 Pecundang Project
     </footer>
+
+    <!-- Load Bootstrap JS dan dependencies dari lokal -->
+    <script src="{% static 'bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Father Icon -->
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
