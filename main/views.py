@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from .forms import ContactForm
+from .forms import PesanForm
+from .models import Pesan
 
 # Create your views here.
 from django.http import HttpResponse
@@ -41,3 +43,18 @@ def contact_view(request):
 
 def success_view(request):
     return render(request, 'main/success.html')
+
+def masages_view(request):
+    if request.method == 'POST':
+        form = PesanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('daftar_pesan')  # Ganti dengan URL tujuan setelah submit
+    else:
+        form = PesanForm()
+    
+    return render(request, 'main/massage.html', {'form': form})
+
+def daftar_pesan(request):
+    semua_pesan = Pesan.objects.all()
+    return render(request, 'main/massage_view.html', {'pesan_list': semua_pesan})

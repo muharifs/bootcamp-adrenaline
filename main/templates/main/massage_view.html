@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="alert alert-success mt-5">
+        <h1>Daftar Pesan</h1>
+    <ul>
+        {% for pesan in pesan_list %}
+        <li>
+            <strong>{{ pesan.name }}</strong> ({{ pesan.email }})<br>
+            {{ pesan.isi }}<br>
+            <small>{{ pesan.created_at }}</small>
+        </li>
+        <hr>
+        {% empty %}
+        <li>Belum ada pesan.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

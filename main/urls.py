@@ -7,4 +7,6 @@ urlpatterns = [
     path('profile/<str:username>/', views.profile, name='profile'),  # URL dengan parameter
     path('contact/', views.contact_view, name='contact'),
     path('success/', views.success_view, name='success_page'),
+    path('massage/', views.masages_view, name='massage'),
+    path('massageview/', views.daftar_pesan, name='daftar_pesan'),
 ]

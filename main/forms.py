@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 
 class ContactForm(forms.Form):
     nama = forms.CharField(
@@ -14,3 +15,8 @@ class ContactForm(forms.Form):
         label='Pesan Anda',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
     )
+
+class PesanForm(forms.ModelForm):
+    class Meta:
+        model = Pesan
+        fields = ['name', 'email', 'isi']
