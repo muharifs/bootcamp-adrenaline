@@ -58,3 +58,18 @@ def masages_view(request):
 def daftar_pesan(request):
     semua_pesan = Pesan.objects.all()
     return render(request, 'main/massage_view.html', {'pesan_list': semua_pesan})
+
+def htmx_view(request):
+    return render(request, 'main/htmx.html')
+
+def get_data(request):
+    # Data dari database atau lainnya
+    items = ["Item 1", "Item 2", "Item 3"]
+    return render(request, 'main/partial.html', {'items': items})
+
+def post_data(request):
+    if request.method == 'POST':
+        # Proses data POST
+        received_data = request.POST.get('data')
+        return HttpResponse(f"Data diterima: {received_data}")
+    return HttpResponse("Metode tidak diizinkan", status=405)

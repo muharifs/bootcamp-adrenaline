@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}HTMX{% endblock %}
+
+{% block content %}
+<div>
+    <!-- Contoh hx-get -->
+    <button hx-get="{% url 'get_data' %}" hx-target="#data-container">
+        Muat Data
+    </button>
+    <div id="data-container"></div>
+
+    <!-- Contoh hx-post -->
+    <form hx-post="{% url 'post_data' %}" hx-target="#result-container">
+        {% csrf_token %}
+        <input type="text" name="data">
+        <button type="submit">Kirim</button>
+    </form>
+    <div id="result-container"></div>
+</div>
+{% endblock %}

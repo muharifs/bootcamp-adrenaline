@@ -9,4 +9,7 @@ urlpatterns = [
     path('success/', views.success_view, name='success_page'),
     path('massage/', views.masages_view, name='massage'),
     path('massageview/', views.daftar_pesan, name='daftar_pesan'),
+    path('htmx/', views.htmx_view, name='htmx_test'),
+    path('get-data/', views.get_data, name='get_data'),
+    path('post-data/', views.post_data, name='post_data'),
 ]
