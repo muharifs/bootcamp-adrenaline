@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Comment{% endblock %}
+
+{% block content %}
+    <div class="comment-section" 
+         hx-get="{% url 'get_comments' %}" 
+         hx-trigger="load, every 5s">
+        <!-- Komentar akan dimuat di sini -->
+    </div>
+
+    <div class="comment-box">
+        <h3>Tinggalkan Komentar</h3>
+        <form class="comment-form"
+              hx-post="{% url 'post_comment' %}"
+              hx-target=".comment-section"
+              hx-swap="innerHTML">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nama Anda" required>
+            <textarea name="content" rows="3" placeholder="Komentar Anda..." required></textarea>
+            <button type="submit">Kirim Komentar</button>
+        </form>
+    </div>
+
+    <!-- Template untuk komentar baru (digunakan oleh HTMX) -->
+    <template id="comment-template">
+        <div class="comment">
+            <strong class="comment-author">{name}</strong>
+            <small class="comment-date">{created_at}</small>
+            <p class="comment-content">{content}</p>
+        </div>
+    </template>
+
+    <script>
+        // Fungsi untuk memproses respons komentar baru
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            if (evt.detail.requestConfig.path === '/api/comments/post/') {
+                const form = document.querySelector('.comment-form');
+                if (evt.detail.successful) {
+                    form.reset(); // Reset form setelah berhasil
+                }
+            }
+        });
+    </script>
+{% endblock %}

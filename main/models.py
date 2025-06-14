@@ -14,3 +14,11 @@ class Pesan(models.Model):
     class Meta:
         verbose_name_plural = "Pesan Masuk"
         ordering = ['-created_at']  # Urutkan terbaru pertama
+
+class Comment(models.Model):
+    name = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Komentar oleh {self.name}"
