@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block title %}CRUD atau Mati{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Daftar Produk</h5>
+        <button 
+            class="btn btn-primary"
+            hx-get="{% url 'product-create' %}"
+            hx-target="#form-container"
+            hx-swap="innerHTML">
+            Tambah Produk
+        </button>
+    </div>
+    <div class="card-body">
+        <div id="form-container"></div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nama Produk</th>
+                        <th>Deskripsi</th>
+                        <th>Harga</th>
+                        <th>Waktu Dibuat</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list" hx-trigger="load, productListChanged from:body" hx-get="{% url 'product-list-htmx' %}" hx-target="this">
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

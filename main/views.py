@@ -3,9 +3,18 @@ from .forms import ContactForm
 from .forms import PesanForm
 from .models import Pesan
 from .models import Comment
+from .models import Product
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.views import View
+from django.views.generic import ListView
+from django.contrib import messages
+from .forms import ProductForm
+from .serializers import ProductSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 import json
 
 # Create your views here.
@@ -126,3 +135,50 @@ def post_comment(request):
         })
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    
+class ProductListView(ListView):
+    model = Product
+    template_name = 'main/list_product.html'
+    context_object_name = 'products'
+
+class ProductHTMXView(View):
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.all().order_by('-created_at')
+        return render(request, 'main/products/partials/list.html', {'products': products})
+
+@api_view(['POST'])
+def validate_product_api(request):
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid():
+        return Response({'valid': True, 'data': serializer.data})
+    return Response({'valid': False, 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+def create_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save()
+            messages.success(request, 'Produk berhasil ditambahkan!')
+            return render(request, 'main/products/partials/product_row.html', {'product': product})
+        return render(request, 'main/products/partials/form.html', {'form': form}, status=400)
+    
+    form = ProductForm()
+    return render(request, 'main/products/partials/form.html', {'form': form})
+
+def edit_product(request, pk):
+    product = Product.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Produk berhasil diperbarui!')
+            return render(request, 'main/products/partials/product_row.html', {'product': product})
+        return render(request, 'main/products/partials/form.html', {'form': form}, status=400)
+    
+    form = ProductForm(instance=product)
+    return render(request, 'main/products/partials/form.html', {'form': form, 'product': product})
+
+def delete_product(request, pk):
+    product = Product.objects.get(pk=pk)
+    product.delete()
+    return HttpResponse('')

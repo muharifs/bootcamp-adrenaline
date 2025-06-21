@@ -1,0 +1,54 @@
+<div class="mb-4">
+    <form 
+        hx-post="{% if product %}{% url 'product-edit' product.pk %}{% else %}{% url 'product-create' %}{% endif %}"
+        hx-target="#form-container"
+        novalidate>
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Nama Produk</label>
+            {{ form.name }}
+            <div id="name-errors" class="invalid-feedback"></div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Deskripsi</label>
+            {{ form.description }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.price.id_for_label }}" class="form-label">Harga</label>
+            {{ form.price }}
+            <div id="price-errors" class="invalid-feedback"></div>
+        </div>
+        
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" 
+                onclick="document.getElementById('form-container').innerHTML=''">
+                Batal
+            </button>
+            <button type="submit" class="btn btn-primary">
+                <span class="htmx-indicator spinner-border spinner-border-sm" role="status"></span>
+                Simpan
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('htmx:afterRequest', function(evt) {
+        if (evt.detail.elt.getAttribute('hx-post') === '/products/api/validate/') {
+            const fieldName = evt.detail.elt.name;
+            const errorsDiv = document.getElementById(fieldName + '-errors');
+            const response = JSON.parse(evt.detail.xhr.responseText);
+            
+            if (response.valid) {
+                evt.detail.elt.classList.remove('is-invalid');
+                errorsDiv.innerHTML = '';
+            } else {
+                evt.detail.elt.classList.add('is-invalid');
+                errorsDiv.innerHTML = response.errors[fieldName].join('<br>');
+            }
+        }
+    });
+</script>

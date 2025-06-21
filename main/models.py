@@ -22,3 +22,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Komentar oleh {self.name}"
+    
+class Product(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nama Produk")
+    description = models.TextField(verbose_name="Deskripsi")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Harga")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Waktu Dibuat")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Produk"
+        ordering = ['-created_at']  # Urutkan terbaru pertama   

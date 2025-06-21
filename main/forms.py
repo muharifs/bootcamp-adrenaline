@@ -20,3 +20,29 @@ class PesanForm(forms.ModelForm):
     class Meta:
         model = Pesan
         fields = ['name', 'email', 'isi']
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nama Produk',
+                'hx-post': '/products/api/validate/',
+                'hx-trigger': 'keyup changed delay:500ms',
+                'hx-target': '#name-errors',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Deskripsi Produk',
+                'rows': 3
+            }),
+            'price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Harga',
+                'hx-post': '/products/api/validate/',
+                'hx-trigger': 'keyup changed delay:500ms',
+                'hx-target': '#price-errors',
+            }),
+        }
